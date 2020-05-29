@@ -19,9 +19,7 @@ const char *ssid = "MoBhaile-2.4";
 const char *password = "beerisgood";
 const String accessToken = "cbt2e3vsrcrxrabdqqemzlhgpdh7ed5sonaivnfcnqhvqkvsl7ba";
 //roasted.app
-//const String azureUrl = "https://dev.azure.com/lonelysasquatch/roasted/_apis/build/builds?definitions=2&$top=1&api-version=5.1";
-//bissell mobile
-const String azureUrl = "https://dev.azure.com/BISSELL/BISSELL_IoT/_apis/build/builds?definitions=147&$top=1&api-version=5.1";
+const String azureUrl = "https://dev.azure.com/lonelysasquatch/roasted/_apis/build/builds?definitions=2&$top=1&api-version=5.1";
 const char *baseUrl = "https://dev.azure.com";
 const int httpsPort = 443;
 
@@ -146,10 +144,7 @@ void getStatus()
     http.begin(azureUrl);
 
     //roasted.app
-    //http.addHeader("Authorization", "Basic bmFtZTpjYnQyZTN2c3JjcnhyYWJkcXFlbXpsaGdwZGg3ZWQ1c29uYWl2bmZjbnFodnFrdnNsN2Jh");
-
-    //bissell mobile
-    http.addHeader("Authorization", "Basic bmFtZTp5NWZnemp0ZXdqc2k1dG5vNGR2ZTVvem9lbnVjeWh3c2NqYmp2aHo1cmxyNHB2M3lvbGZx");
+    http.addHeader("Authorization", "Basic bmFtZTpjYnQyZTN2c3JjcnhyYWJkcXFlbXpsaGdwZGg3ZWQ1c29uYWl2bmZjbnFodnFrdnNsN2Jh");
 
     int httpCode = http.GET();
 
