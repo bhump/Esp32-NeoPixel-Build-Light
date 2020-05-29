@@ -87,10 +87,10 @@ bool initializeWifi()
     {
       // blink the leds while connecting to WiFi
       setColor("none");
-      delay(500);
+      delay(800);
       setColor("blue");
       Serial.print(".");
-      delay(500);
+      delay(800);
     }
   }
 
