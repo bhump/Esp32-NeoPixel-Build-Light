@@ -23,11 +23,8 @@ const String azureUrl = "https://dev.azure.com/lonelysasquatch/roasted/_apis/bui
 const char *baseUrl = "https://dev.azure.com";
 const int httpsPort = 443;
 
-//NeoPixel GRBW
-Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRBW + NEO_KHZ800);
-
 //NeoPixel GRB
-//Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 bool isConnected = false;
 bool inProgress = false;
