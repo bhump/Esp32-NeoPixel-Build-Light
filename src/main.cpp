@@ -21,13 +21,12 @@ const char *host = "esp32";
 const char *ssid = "MoBhaile-2.4";
 const char *password = "beerisgood";
 const String accessToken = "cbt2e3vsrcrxrabdqqemzlhgpdh7ed5sonaivnfcnqhvqkvsl7ba";
-//roasted.app
-const String azureUrl = "https://dev.azure.com/lonelysasquatch/roasted/_apis/build/builds?definitions=2&$top=1&api-version=5.1";
+const String azureUrl = "https://dev.azure.com/BISSELL/BISSELL_IoT/_apis/build/builds?definitions=147&$top=1&api-version=5.1";
 const char *baseUrl = "https://dev.azure.com";
 const int httpsPort = 443;
 
-//NeoPixel GRB
-Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+//NeoPixel GRBW
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRBW + NEO_KHZ800);
 
 IPAddress local_IP(192, 168, 1, 231);
 IPAddress gateway(192, 168, 1, 1);
@@ -281,9 +280,8 @@ void setup()
   strip.setBrightness(15);
 
   isConnected = initializeWifi();
-  
+
   initializeWebServer();
-  
 }
 
 void getStatus()
@@ -305,9 +303,6 @@ void getStatus()
     Serial.println(encoded);
 
     http.begin(azureUrl);
-
-    //roasted.app
-    //http.addHeader("Authorization", "Basic bmFtZTpjYnQyZTN2c3JjcnhyYWJkcXFlbXpsaGdwZGg3ZWQ1c29uYWl2bmZjbnFodnFrdnNsN2Jh");
 
     //bissell mobile
     http.addHeader("Authorization", "Basic bmFtZTp5NWZnemp0ZXdqc2k1dG5vNGR2ZTVvem9lbnVjeWh3c2NqYmp2aHo1cmxyNHB2M3lvbGZx");
