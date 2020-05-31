@@ -281,11 +281,9 @@ void setup()
   strip.setBrightness(15);
 
   isConnected = initializeWifi();
-
-  if (isConnected)
-  {
-    initializeWebServer();
-  }
+  
+  initializeWebServer();
+  
 }
 
 void getStatus()
