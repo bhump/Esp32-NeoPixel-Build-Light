@@ -282,10 +282,7 @@ void setup()
 
   isConnected = initializeWifi();
 
-  if (isConnected)
-  {
-    initializeWebServer();
-  }
+  initializeWebServer();
 }
 
 void getStatus()
