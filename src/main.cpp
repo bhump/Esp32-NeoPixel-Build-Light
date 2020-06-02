@@ -18,17 +18,17 @@ int maxBrightness = 255;
 int minBrightness = 80;
 
 const char *host = "esp32";
-const char *ssid = "MoBhaile-2.4";
-const char *password = "beerisgood";
-const String accessToken = "cbt2e3vsrcrxrabdqqemzlhgpdh7ed5sonaivnfcnqhvqkvsl7ba";
-const String azureUrl = "https://dev.azure.com/BISSELL/BISSELL_IoT/_apis/build/builds?definitions=147&$top=1&api-version=5.1";
+const char *ssid = "**SSID**";
+const char *password = "**PASSWORD**";
+const String accessToken = "**ACCESS_TOKEN_HERE***";
+const String azureUrl = "https://dev.azure.com/**ORGANIZATION**/**PROJECT**/_apis/build/builds?definitions=**DEFINITIONID**&$top=1&api-version=5.1";
 const char *baseUrl = "https://dev.azure.com";
 const int httpsPort = 443;
 
 //NeoPixel GRBW
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRBW + NEO_KHZ800);
 
-IPAddress local_IP(192, 168, 1, 231);
+IPAddress local_IP(192, 168, 1, 20);
 IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 0, 0);
 IPAddress primaryDNS(8, 8, 8, 8);   //optional
@@ -119,6 +119,7 @@ void setColor(String color)
 {
   strip.clear();
   strip.show();
+  delay(500);
   if (color == "green")
   {
     strip.fill(strip.Color(0, 255, 0), 0, strip.numPixels());
@@ -141,7 +142,11 @@ void setColor(String color)
   }
   else if (color == "orange")
   {
-    strip.fill(strip.Color(255, 165, 255), 0, strip.numPixels());
+    strip.fill(strip.Color(255, 128, 0), 0, strip.numPixels());
+  }
+  else if(color == "yellow green")
+  {    
+    strip.fill(strip.Color(154, 205, 50), 0, strip.numPixels());
   }
   else if (color == "none")
   {
@@ -288,7 +293,8 @@ void getStatus()
 {
   try
   {
-    char inputString[] = "name:cbt2e3vsrcrxrabdqqemzlhgpdh7ed5sonaivnfcnqhvqkvsl7ba";
+    //BASE64 encoding is kaputt right now
+    char inputString[] = "**USERNAME**:**ACCESS_TOKEN**";
     int inputStringLength = sizeof(inputString);
 
     int encodedLength = Base64.encodedLength(inputStringLength);
@@ -304,8 +310,7 @@ void getStatus()
 
     http.begin(azureUrl);
 
-    //bissell mobile
-    http.addHeader("Authorization", "Basic bmFtZTp5NWZnemp0ZXdqc2k1dG5vNGR2ZTVvem9lbnVjeWh3c2NqYmp2aHo1cmxyNHB2M3lvbGZx");
+    http.addHeader("Authorization", "Basic **BASE64_ENCODED_USERNAME_&_ACCESS_TOEKN**");
 
     int httpCode = http.GET();
 
@@ -355,11 +360,18 @@ void getStatus()
         Serial.println("Build Successful");
         lastStatus = statusString;
       }
-      else if (resultString == "completed" && resultString == "failed")
+      else if (statusString == "completed" && resultString == "failed")
       {
         inProgress = false;
         setColor("red");
         Serial.println("Build Failed");
+        lastStatus = statusString;
+      }
+      else if (statusString == "completed" && resultString == "partiallySucceeded")
+      {
+        inProgress = false;
+        setColor("orange");
+        Serial.println("Build Partially Succeeded");
         lastStatus = statusString;
       }
     }
@@ -414,18 +426,4 @@ void loop()
 
     delay(5000);
   }
-
-  // unsigned long currentMillis = millis();
-  // if (currentMillis - previousMillis >= interval)
-  // {
-
-  //   // // save the last time you blinked the LED
-  //   previousMillis = currentMillis;
-  //   //blinkUpdate();
-
-  //   // if the LED is off turn it on and vice-versa:
-  //   ledState = not(ledState);
-  //   // set the LED with the ledState of the variable:
-  //   digitalWrite(led, ledState);
-  // }
 }
